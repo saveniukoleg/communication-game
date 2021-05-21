@@ -243,13 +243,13 @@
                             markerRoots[i].add(controller);
                             break;
                         default:
-                            // Если никакого контента добавленно не было, добавляем обычный красный куб 1х1х1
-                            //let mesh = new THREE.Mesh(
-                            //    new THREE.CubeGeometry(1, 1, 1),
-                            //    new THREE.MeshBasicMaterial({ color: colors[i], transparent: true, opacity: 0.5 })
-                            //);
-                            //mesh.position.y = 0.5;
-                            //markerRoots[i].add(mesh);
+                            Если никакого контента добавленно не было, добавляем обычный красный куб 1х1х1
+                            let mesh = new THREE.Mesh(
+                               new THREE.CubeGeometry(1, 1, 1),
+                               new THREE.MeshBasicMaterial({ color: colors[i], transparent: true, opacity: 0.5 })
+                            );
+                            mesh.position.y = 0.5;
+                            markerRoots[i].add(mesh);
                             break;
                     }
     
@@ -358,9 +358,9 @@
                 // Убираем ивент с функции, чтобы она не вызвалась при последующих нажатиях
                 window.removeEventListener('touchstart', playAudioContent);
                 // Проходимся по массиву аудио контента и запускаем каждый контент
-                for (let i = 0; i < audioContent.length; i++) {
-                    audioContent[i].play();
-                }
+//                 for (let i = 0; i < audioContent.length; i++) {
+//                     audioContent[i].play();
+//                 }
                 audioInitialized = true;
             };
             // Вызываем функцию по нажатию на экран
