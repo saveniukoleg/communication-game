@@ -358,9 +358,9 @@
                 // Убираем ивент с функции, чтобы она не вызвалась при последующих нажатиях
                 window.removeEventListener('touchstart', playAudioContent);
 //                 Проходимся по массиву аудио контента и запускаем каждый контент
-//                 for (let i = 0; i < audioContent.length; i++) {
-//                     audioContent[i].play();
-//                 }
+                for (let i = 0; i < audioContent.length; i++) {
+                    audioContent[i].play();
+                }
                 audioInitialized = true;
             };
             // Вызываем функцию по нажатию на экран
