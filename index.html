@@ -317,14 +317,14 @@
                 if (arToolkitSource.ready !== false) {
                     arToolkitContext.update(arToolkitSource.domElement);
                     if (audioInitialized) {
-                        barcodesID.forEach((elem, index) => {
-                            const sound = barcodesSound.get(elem);
-                            if (arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
-                                sound.play();
-                            } else if (!arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
-                                sound.pause();
-                            }
-                        })
+//                         barcodesID.forEach((elem, index) => {
+//                             const sound = barcodesSound.get(elem);
+//                             if (arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
+//                                 sound.play();
+//                             } else if (!arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
+//                                 sound.pause();
+//                             }
+//                         })
                         patternsID.forEach((elem, index) => {
                             const sound = patternsSound.get(index);
                             if (arToolkitContext.arController.patternMarkers[index].inCurrent && sound) {
@@ -357,7 +357,7 @@
             const playAudioContent = () => {
                 // Убираем ивент с функции, чтобы она не вызвалась при последующих нажатиях
                 window.removeEventListener('touchstart', playAudioContent);
-                // Проходимся по массиву аудио контента и запускаем каждый контент
+//                 Проходимся по массиву аудио контента и запускаем каждый контент
 //                 for (let i = 0; i < audioContent.length; i++) {
 //                     audioContent[i].play();
 //                 }
