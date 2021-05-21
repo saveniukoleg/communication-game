@@ -137,6 +137,8 @@
                   const audioFiles = ["" ,"" ,"" ,"" ,"" ,""];
                   // Массив опций повтора аудио и видео контента, по дефолту для всех будет false
                   const repeatOptions = ["true" ,"true" ,"true" ,"true" ,"true" ,"true"];
+                    
+                  const colors = ['blue', 'white', 'orange', 'green', 'red', 'black'];
   
                   // Создаём массив для всех маркеров
                   const markerRoots = [];
@@ -244,7 +246,7 @@
                             // Если никакого контента добавленно не было, добавляем обычный красный куб 1х1х1
                             let mesh = new THREE.Mesh(
                                 new THREE.CubeGeometry(1, 1, 1),
-                                new THREE.MeshBasicMaterial({ color: 'red', transparent: true, opacity: 0.5 })
+                                new THREE.MeshBasicMaterial({ color: colors[i], transparent: true, opacity: 0.5 })
                             );
                             mesh.position.y = 0.5;
                             markerRoots[i].add(mesh);
