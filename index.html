@@ -269,12 +269,7 @@
                                 sound.setLoop(true);
                             }
                             // Уменьшаем громкость в 2 раза
-                            sound.setVolume(0.5);
-                            if (patternBarcode[i] === -1) {
-                                patternsSound.set(patternsID.length - 1, sound);
-                            } else {
-                                barcodesSound.set(patternBarcode[i], sound);
-                            }
+                            patternsSound.set(i, sound);
                         });
                     }
                 }
@@ -360,6 +355,11 @@
 //                 Проходимся по массиву аудио контента и запускаем каждый контент
                 for (let i = 0; i < audioContent.length; i++) {
                     audioContent[i].play();
+                      
+                }
+                for (let i = 0; i < audioContent.length; i++) {
+                      
+                    audioContent[i].pause();
                 }
                 audioInitialized = true;
             };
