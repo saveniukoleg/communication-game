@@ -326,7 +326,7 @@
 //                             }
 //                         })
                         if (patternsID.length) {
-                            for (let index = 0; i < patternsID.length; i++) {
+                            for (let index = 0; index < patternsID.length; index++) {
                                 if (arToolkitContext.arController.patternMarkers[index].inCurrent) {
                                     let sound = patternsSound.get(index);
                                     if (sound && !sound.isPlaying) sound.play();
