@@ -5,9 +5,10 @@
           <title>Communication Game</title>
           <!-- Добавляем необходимые библиотеки -->
           <!-- Библиотека three.js -->
-          <script src='js/three.js'></script>
+          <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+          <!-- <script src='js/three.js'></script>
           <script src='js/OBJLoader.js'></script>
-          <script src='js/MTLLoader.js'></script>
+          <script src='js/MTLLoader.js'></script> -->
           <!-- Библиотека tween.js -->
           <script src="js/tween.umd.js"></script>
           <!-- Добавляем jsartookit -->
@@ -61,6 +62,9 @@
                   // Добавляем камеру, которая будет позже переназначена на камеру смартфона
                   camera = new THREE.Camera();
                   scene.add(camera);
+                  const listener = new THREE.AudioListener();
+                  camera.add(listener);
+                  const audioLoader = new THREE.AudioLoader();
       
                   // Объявляем стандартный рендерер и добавляем его в тег body html документа
                   renderer = new THREE.WebGLRenderer({
@@ -255,22 +259,22 @@
     
                     // Если имеются аудио файлы настраиваем их и добавляем в массив аудио контента
                     if (audioFiles[i]) {
-                        const listener = new THREE.AudioListener();
-                        camera.add(listener);
-                        // Создаём глобальный аудио источник
-                        const sound = new THREE.Audio(listener);
-                        audioContent.push(sound);
-                        // Загружаем аудио и добавляем его в буфер
-                        const audioLoader = new THREE.AudioLoader();
-                        audioLoader.load(`${audioFiles[i]}`, function (buffer) {
+                        audioLoader.load(`${audioFiles[i]}`, (buffer) => {
+                            // Создаём глобальный аудио источник
+                            let sound = new THREE.Audio(listener);
+                            sound.name = `${audioFiles[i]}`;
                             sound.setBuffer(buffer);
                             // Устанавлием аудио на автоповтор в зависимости от значения в массиве
                             if (repeatOptions[i]) {
                                 sound.setLoop(true);
                             }
+                            // sound.play()
+                            console.log(sound.source)
                             // Уменьшаем громкость в 2 раза
                             patternsSound.set(i, sound);
                         });
+
+                        // audioContent.push(sound);
                     }
                 }
     
@@ -306,6 +310,7 @@
 
                 return box1.intersectsBox(box2);
             };
+            let lol = true;
     
             // Обновляем AR контент на каждый кадр
             function update() {
@@ -320,14 +325,25 @@
 //                                 sound.pause();
 //                             }
 //                         })
-                        patternsID.forEach((elem, index) => {
-                            const sound = patternsSound.get(index);
-                            if (arToolkitContext.arController.patternMarkers[index].inCurrent && sound) {
-                                sound.play();
-                            } else if (!arToolkitContext.arController.patternMarkers[index].inCurrent && sound) {
-                                sound.pause();
-                            }
-                        })
+                        if (patternsID.length) {
+                            patternsID.forEach((elem, index) => {
+                                    if (arToolkitContext.arController.patternMarkers[index].inCurrent) {
+                                        let sound = patternsSound.get(index);
+                                        // console.log(sound.isPlaying)
+                                        if (sound && !sound.isPlaying) sound.play();
+                                    } else {
+                                        let sound = patternsSound.get(index);
+                                        // console.log(arToolkitContext.arController.patternMarkers[index].inCurrent, index, sound, sound.name)
+                                        // if (lol) {
+                                        // console.log(index, sound.source, sound.name)
+                                        //     lol = false;
+                                        // }
+                                        // if (sound) sound.pause();
+                                        if (sound && sound.isPlaying) sound.stop();
+                                    }
+                                
+                                })
+                        }
                     }
                 }
             }
@@ -351,16 +367,17 @@
             // Функция запуска всего аудио контента приложения
             const playAudioContent = () => {
                 // Убираем ивент с функции, чтобы она не вызвалась при последующих нажатиях
-                window.removeEventListener('touchstart', playAudioContent);
+                // window.removeEventListener('touchstart', playAudioContent);
 //                 Проходимся по массиву аудио контента и запускаем каждый контент
-                for (let i = 0; i < audioContent.length; i++) {
-                    audioContent[i].play();
-                      
-                }
+                // for (let i = 0; i < audioContent.length; i++) {
+                //     audioContent[i].play();
+                //     //   console.log(audioContent)
+                // }
                 audioInitialized = true;
+                // console.log(patternsSound.get(5));
             };
             // Вызываем функцию по нажатию на экран
-//             window.addEventListener('touchstart', playAudioContent)
+            window.addEventListener('touchstart', playAudioContent)
     
         </script>
     
