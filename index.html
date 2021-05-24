@@ -327,22 +327,15 @@
 //                         })
                         if (patternsID.length) {
                             patternsID.forEach((elem, index) => {
-                                    if (arToolkitContext.arController.patternMarkers[index].inCurrent) {
-                                        let sound = patternsSound.get(index);
-                                        // console.log(sound.isPlaying)
-                                        if (sound && !sound.isPlaying) sound.play();
-                                    } else {
-                                        let sound = patternsSound.get(index);
-                                        // console.log(arToolkitContext.arController.patternMarkers[index].inCurrent, index, sound, sound.name)
-                                        // if (lol) {
-                                        // console.log(index, sound.source, sound.name)
-                                        //     lol = false;
-                                        // }
-                                        // if (sound) sound.pause();
-                                        if (sound && sound.isPlaying) sound.stop();
-                                    }
-                                
-                                })
+                                if (arToolkitContext.arController.patternMarkers[index].inCurrent) {
+                                    let sound = patternsSound.get(index);
+                                    if (sound && !sound.isPlaying) sound.play();
+                                } else {
+                                    let sound = patternsSound.get(index);
+                                    if (sound && sound.isPlaying) sound.stop();
+                                }
+                            
+                            })
                         }
                     }
                 }
