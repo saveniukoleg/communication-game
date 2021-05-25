@@ -268,15 +268,17 @@
                             if (repeatOptions[i]) {
                                 sound.setLoop(true);
                             }
-                            // sound.play()
-                            // console.log(sound.source)
-                            // Уменьшаем громкость в 2 раза
-                            patternsSound.set(i, sound);
+                            if (patternBarcode[i] === -1) {
+                                patternsSound.set(patternNames[i], sound);
+                            } else {
+                                barcodesSound.set(patternBarcode[i], sound);
+                            }
                         });
 
                         // audioContent.push(sound);
                     }
                 }
+                console.log(patternsSound)
     
                 // Добавляем главный контейнер на сцену
                 scene.add(mainContainer);
@@ -317,21 +319,24 @@
                 if (arToolkitSource.ready !== false) {
                     arToolkitContext.update(arToolkitSource.domElement);
                     if (audioInitialized) {
-//                         barcodesID.forEach((elem, index) => {
-//                             const sound = barcodesSound.get(elem);
-//                             if (arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
-//                                 sound.play();
-//                             } else if (!arToolkitContext.arController.barcodeMarkers[elem].inCurrent && sound) {
-//                                 sound.pause();
-//                             }
-//                         })
+                        if (barcodesID.length) {
+                            barcodesID.forEach((elem, index) => {
+                                if (arToolkitContext.arController.barcodeMarkers[elem].inCurrent) {
+                                    let sound = barcodesSound.get(elem);
+                                    if (sound && !sound.isPlaying) sound.play();
+                                } else {
+                                    let sound = barcodesSound.get(elem);
+                                    if (sound && sound.isPlaying) sound.stop();
+                                }
+                            })
+                        }
                         if (patternsID.length) {
                             for (let index = 0; index < patternsID.length; index++) {
                                 if (arToolkitContext.arController.patternMarkers[index].inCurrent) {
-                                    let sound = patternsSound.get(index);
+                                    let sound = patternsSound.get(patternsID[index]);
                                     if (sound && !sound.isPlaying) sound.play();
                                 } else {
-                                    let sound = patternsSound.get(index);
+                                    let sound = patternsSound.get(patternsID[index]);
                                     if (sound && sound.isPlaying) sound.stop();
                                 }
                             }
